@@ -19,7 +19,7 @@ class MyDB(object):
         '''
         初始化函数
         '''
-        self.engine = create_engine('sqlite:///C:\workshop\python\order\db\mydb.sqlite3',echo=True)
+        self.engine = create_engine('sqlite:///C:\workshop\python\order\db\mydb.sqlite3',echo=False)
         Session = sessionmaker(bind= self.engine)
         self.session = Session()
         self.metadata = Base.metadata
@@ -65,61 +65,39 @@ class MyDB(object):
         #初始化db
         self.session.query(DB).delete()
         
-        db = DB(id = 1, name = 'XGP11', user = 'helios', password = 'helios', tns = 'XGP1', deploy_time = '00:05')
+        db = DB(id = 1, name = 'XGP11', user = 'helios', password = 'helios', tns = 'XGP1', deploy_time = '00:05', \
+                remark = '第1组高频交易库')
         self.session.add(db)
     
-        db = DB(id = 2, name = 'XGP21', user = 'helios', password = 'helios', tns = 'XGP2', deploy_time = '00:05')
+        db = DB(id = 2, name = 'XGP21', user = 'helios', password = 'helios', tns = 'XGP2', deploy_time = '00:05', \
+                remark = '第2组高频交易库')
         self.session.add(db)
     
-        db = DB(id = 3, name = 'XGP31', user = 'helios', password = 'helios', tns = 'XGP3', deploy_time = '00:05')
+        db = DB(id = 3, name = 'XGP31', user = 'helios', password = 'helios', tns = 'XGP3', deploy_time = '00:05', \
+                remark = '第3组高频交易库')
         self.session.add(db)
     
-        db = DB(id = 4, name = 'XGP41', user = 'helios', password = 'helios', tns = 'XGP4', deploy_time = '02:05')
+        db = DB(id = 4, name = 'XGP41', user = 'helios', password = 'helios', tns = 'XGP4', deploy_time = '02:05', \
+                remark = '第4组高频交易库')
         self.session.add(db)
     
-        db = DB(id = 5, name = 'XGP61', user = 'helios', password = 'helios', tns = 'XGP6', deploy_time = '22:05')
+        db = DB(id = 5, name = 'XGP61', user = 'helios', password = 'helios', tns = 'XGP6', deploy_time = '22:05', \
+                remark = '第6组高频交易库')
         self.session.add(db)
     
-        db = DB(id = 6, name = 'XGP71', user = 'helios', password = 'helios', tns = 'XGP7', deploy_time = '02:35')
+        db = DB(id = 6, name = 'XGP71', user = 'helios', password = 'helios', tns = 'XGP7', deploy_time = '02:35', \
+                remark = '第7组高频交易库')
         self.session.add(db)
     
-        db = DB(id = 7, name = 'CLCTGP', user = 'aeg2', password = 'aeg2', tns = 'CLCT', deploy_time = '')
+        db = DB(id = 7, name = 'CLCTGP', user = 'aeg2', password = 'aeg2', tns = 'CLCT', deploy_time = '02:10', \
+                remark = '高频归集库')
         self.session.add(db)
     
-        db = DB(id = 8, name = 'Aegean2', user = 'xgp_check', password = 'xgp_check', tns = 'aegean2', deploy_time = '10:30')
+        db = DB(id = 8, name = 'Aegean2', user = 'xgp_check', password = 'xgp_check', tns = 'aegean2', deploy_time = '10:30', \
+                remark = '高频计奖验证库')
         self.session.add(db)
         self.session.commit()
         
-        #初始化product        
-        self.session.query(Product).delete()
-        
-        p = Product(id = 1, product_name = '实施文档')
-        self.session.add(p)
-    
-        p = Product(id = 2, product_name = '生产确认单')
-        self.session.add(p)
-        
-        p = Product(id = 3, product_name = '设计文档')
-        self.session.add(p)
-        
-        p = Product(id = 4, product_name = '单元测试报告')
-        self.session.add(p)
-        
-        p = Product(id = 5, product_name = '应用程序')
-        self.session.add(p)
-        
-        p = Product(id = 6, product_name = '普通工单审核')
-        self.session.add(p)
-        
-        p = Product(id = 8, product_name = '关键工单审核')
-        self.session.add(p)
-        
-        p = Product(id = 9, product_name = '综合实施文档')
-        self.session.add(p)
-    
-        p = Product(id = 10, product_name = '推广工单实施文档')
-        self.session.add(p)
-        self.session.commit()
         
         #初始化template
         self.session.query(Template).delete()
@@ -214,36 +192,53 @@ class MyDB(object):
         
         self.session.commit()
         
-        #初始化task
-        self.session.query(Task).delete()
+        #初始化系统编码数据
+        #应用变更类型
+        sc = System_Code_Def(id = 1, name = 'APP_CHANGE_TYPE', remark = '应用程序变更类型')
+        self.session.add(sc)
         
-        task = Task(id = 1, task_name = '编写实施文档')
-        self.session.add(task)
+        kv = KV(id = 101, system_code_id = 1, key = 1, val = '新增')
+        self.session.add(kv)
         
-        task = Task(id = 2, task_name = '编写生产确认单')
-        self.session.add(task)
+        kv = KV(id = 102, system_code_id = 1, key = 2, val = '修改')
+        self.session.add(kv)
         
-        task = Task(id = 3, task_name = '编写设计文档')
-        self.session.add(task)
+        kv = KV(id = 103, system_code_id = 1, key = 3, val = '删除')
+        self.session.add(kv)
         
-        task = Task(id = 4, task_name = '编写测试报告')
-        self.session.add(task)
+        kv = KV(id = 104, system_code_id = 1, key = 4, val = '数据维护')
+        self.session.add(kv)
         
-        task = Task(id = 5, task_name = '编写应用程序')
-        self.session.add(task)
+        sc = System_Code_Def(id = 2, name = 'ORDER_PRODUCT', remark = '工单发布物')
+        self.session.add(sc)
         
-        task = Task(id = 6, task_name = '普通工单审核')
-        self.session.add(task)
+        kv = KV(id = 201, system_code_id = 2, key = 1, val = '实施文档')
+        self.session.add(kv)
         
-        task = Task(id = 7, task_name = '关键工单审核')
-        self.session.add(task)        
+        kv = KV(id = 202, system_code_id = 2, key = 2, val = '生产确认单')
+        self.session.add(kv)
         
-        task = Task(id = 9, task_name = '编写综合实施文档')
-        self.session.add(task)
+        kv = KV(id = 203, system_code_id = 2, key = 3, val = '设计文档')
+        self.session.add(kv)
         
-        task = Task(id = 10, task_name = '编写推广工单实施文档')
-        self.session.add(task)
+        kv = KV(id = 204, system_code_id = 2, key = 4, val = '单元测试报告')
+        self.session.add(kv)
         
+        kv = KV(id = 205, system_code_id = 2, key = 5, val = '应用程序')
+        self.session.add(kv)
+        
+        kv = KV(id = 206, system_code_id = 2, key = 6, val = '普通工单审核')
+        self.session.add(kv)
+        
+        kv = KV(id = 207, system_code_id = 2, key = 7, val = '关键工单审核')
+        self.session.add(kv)
+        
+        kv = KV(id = 208, system_code_id = 2, key = 8, val = '综合实施文档')
+        self.session.add(kv)
+        
+        kv = KV(id = 209, system_code_id = 2, key = 9, val = '推广工单实施文档')
+        self.session.add(kv)
+              
         self.session.commit()
         pass
         
@@ -265,16 +260,8 @@ class Order(Base):
     __tablename__ = 'order'
     order_no = Column(String, primary_key = True)
     order_name = Column(String)
-    developer_id = Column(Integer)
-    director_id = Column(Integer)
+    
 
-class Product(Base):
-    '''
-    产出物信息表
-    '''
-    __tablename__ = 'product'
-    id = Column(Integer, primary_key = True)
-    product_name = Column(String)
 
 class Order_Product(Base):
     '''
@@ -292,12 +279,32 @@ class Order_App(Base):
     __tablename__ = 'order_app'
     id = Column(Integer, primary_key = True)
     order_no = Column(String)
+    app_id = Column(Integer)
     program_name = Column(String)
     url = Column(String)
     rbk_program_name = Column(String)
     current_ver = Column(String)
     old_ver = Column(String)
+    app_change_type = Column(Integer)
 
+class System_Code_Def(Base):
+    '''
+    系统编码定义表
+    '''
+    __tablename__ = 'system_code'
+    id = Column(Integer, primary_key = True)
+    name = Column(String)
+    remark = Column(String)
+
+class KV(Base):
+    '''
+    系统编码key、value表
+    '''
+    __tablename__ = 'kv'
+    id = Column(Integer, primary_key = True)
+    system_code_id = Column(Integer)
+    key = Column(Integer)
+    val = Column(String)
 class DB(Base):
     '''
     数据库信息表
@@ -322,6 +329,27 @@ class Order_Batch(Base):
     batch_order_name = Column(String)
     batch_developer_id = Column(Integer)
     batch_director_id = Column(Integer)
+    batch_id = Column(Integer)
+
+class Order_Batch_DB(Base):
+    '''
+    工单分批与DB的对应关系，即每批实施的工单对应的数据库
+    '''
+    __tablename__ = 'order_batch_db'
+    id = Column(Integer, primary_key = True)
+    order_no = Column(String)
+    batch_id = Column(Integer)
+    db_id = Column(Integer)
+
+class Order_App_DB(Base):
+    '''
+    应用程序对应DB
+    '''
+    __tablename__ = 'order_app_db'
+    id = Column(Integer, primary_key = True)
+    order_no = Column(String)
+    app_id = Column(Integer)
+    db_id = Column(Integer)
 
 class Template(Base):
     '''
@@ -333,31 +361,13 @@ class Template(Base):
     url = Column(String)
     remark = Column(String)
 
-class Task(Base):
-    '''
-    通用工单任务信息表
-    '''
-    __tablename__ = 'task'
-    id = Column(Integer, primary_key = True)
-    task_name = Column(String)
-    
-class Order_Task(Base):
-    '''
-    工单任务表
-    '''
-    __tablename__ = 'order_task'
-    id = Column(Integer, primary_key = True)
-    order_no = Column(String)
-    task_id = Column(Integer)
-    task_status = Column(String)
-    
-
 
 if __name__ == '__main__':
     mydb = MyDB()
     mydb.metadata.create_all(mydb.engine)
     mydb.initialData()
     mydb.session.close()
+    print('应用程序执行完毕！')
 #Base.metadata.create_all(engine)
 '''
 session = Session()
