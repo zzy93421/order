@@ -2,6 +2,7 @@ WHENEVER sqlerror EXIT;
 set serveroutput on size 1000000 format wrapped
 set feed on
 set autop off
+set sqlblanklines on
 
 call DBMS_OUTPUT.put_line('start_time '||TO_CHAR(SYSDATE,'yyyy-mm-dd hh24:mi:ss'));
 --updatename,Aeg2DBCheck_{pvdb_ver}.3.0_{exe_name}

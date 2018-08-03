@@ -2,6 +2,8 @@ WHENEVER sqlerror EXIT;
 SET serveroutput ON
 SET feed ON
 SET autop off
+set sqlblanklines on
+
 call DBMS_OUTPUT.put_line('start_time '||TO_CHAR(SYSDATE,'yyyy-mm-dd hh24:mi:ss'));
 --updatename,CLCTDB_{clctgp_ver}.2.0_{exe_name}
 --svn,99999
